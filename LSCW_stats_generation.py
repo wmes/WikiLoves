@@ -1,6 +1,14 @@
 #!/usr/bin/python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
+# LSCW_stats_generation.py  Creates the statistics for Locations of the Spanish Civil War contest. It takes as input 
+#                           the category where the images are ('LSCW_CATEGORY').
+# author:                   Discasto (WM-ES)
+# date:                     2016-04-15
+#
+# Distributed under the terms of the MIT license.
+########################################################################################################################
+#
 import pywikibot as pb
 from pywikibot import pagegenerators
 import mwparserfromhell as mwh
@@ -203,7 +211,7 @@ def main():
 
     # Quality images gallery
     qi_gallery_text = u'This page lists the %d [[Commons:Quality Images|quality images]] uploaded as part of the ' \
-                      u'[[:es:Wikiproyecto:Historia militar/Guerra Civil Española/Localizaciones|Locations of the Spanish Civil War]] ' \
+                      u'[[:es:Wikiproyecto:Historia militar/Guerra Civil EspaÃ±ola/Localizaciones|Locations of the Spanish Civil War]] ' \
                       u'contest in 2016.\n\n' % (len(QI_list))
     qi_gallery_text += u"'''Statistics generation date''': {{subst:CURRENTTIME}} UTC, {{subst:CURRENTMONTHNAME}} {{subst:CURRENTDAY}}, {{subst:CURRENTYEAR}}\n"
     qi_gallery_text += u'<gallery>\n'
