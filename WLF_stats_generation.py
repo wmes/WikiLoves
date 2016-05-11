@@ -1,6 +1,15 @@
 #!/usr/bin/python
 # -*- coding: latin-1 -*-
 
+# WLF_stats_generation.py  Creates the statistics for the fist period of WLF 2016 in Spain. It takes as input the category 
+#                          where the images are ('WLF_CATEGORY'). Unlike WLE_stats_generation.py, it also handles the festival
+#                          database ('FESTIVAL_DB_PAGE')
+# author:                  Discasto (WM-ES)
+# date:                    2016-14-04
+#
+# Distributed under the terms of the MIT license.
+########################################################################################################################
+#
 import pywikibot as pb
 from pywikibot import pagegenerators
 import mwparserfromhell as mwh
@@ -48,34 +57,34 @@ NEW_USER_TIME = START_TIME - (86400000*14)
 
 FRACTION_BUG_HEAD = u"* '''Commons category''': [[:Category:Sanfermines|Sanfermines]]\n" \
                     u"* {{gl|[[:gl:Sanfermines|Sanfermines]]}}\n" \
-                    u"* {{pt|[[:pt:Festas de São Firmino|Festas de São Firmino]]}}\n" \
+                    u"* {{pt|[[:pt:Festas de SÃ£o Firmino|Festas de SÃ£o Firmino]]}}\n" \
                     u"* {{es|[[:es:Sanfermines|Sanfermines]]}}\n" \
-                    u"* {{en|[[:en:San Fermín|San Fermín]]}}\n" \
-                    u"* {{fr|[[:fr:Fêtes de San Fermín|Fêtes de San Fermín]]}}\n" \
-                    u"* {{eu|[[:eu:Iruñeko Sanferminak|Iruñeko Sanferminak]]}}\n" \
+                    u"* {{en|[[:en:San FermÃ­n|San FermÃ­n]]}}\n" \
+                    u"* {{fr|[[:fr:FÃªtes de San FermÃ­n|FÃªtes de San FermÃ­n]]}}\n" \
+                    u"* {{eu|[[:eu:IruÃ±eko Sanferminak|IruÃ±eko Sanferminak]]}}\n" \
                     u"* {{it|[[:it:Festa di san Firmino|Festa di san Firmino]]}}\n" \
                     u"* {{ca|[[:ca:Sanfermines|Sanfermines]]}}\n\n"
 
 FRACTION_BUG_CAT = u'Sanfermines'
 
 annexes = [
-            [u'Anexo:Fiestas de interés turístico de Andalucía', None, u'Andalusia'],
-            [u'Anexo:Fiestas de interés turístico de Aragón', None, u'Aragon'],
-            [u'Anexo:Fiestas de interés turístico de Asturias', None, u'Asturias'],
-            [u'Anexo:Fiestas de interés turístico de Cantabria', None, u'Cantabria'],
-            [u'Anexo:Fiestas de interés turístico de Castilla-La Mancha', None, u'Castile-La Mancha'],
-            [u'Anexo:Fiestas de interés turístico de Castilla y León', None, u'Castile and León'],
-            [u'Anexo:Fiestas de interés turístico de Cataluña', None, u'Catalonia'],
-            [u'Anexo:Fiestas de interés turístico de la Comunidad de Madrid', None, u'Community of Madrid'],
-            [u'Anexo:Fiestas de interés turístico de la Comunidad Valenciana', None, u'Valencian Community'],
-            [u'Anexo:Fiestas de interés turístico de Extremadura', None, u'Extremadura'],
-            [u'Anexo:Fiestas de interés turístico de las Islas Baleares', None, u'Balearic Islands'],
-            [u'Anexo:Fiestas de interés turístico de las Islas Canarias', None, u'Canary Islands'],
-            [u'Anexo:Fiestas de interés turístico de Galicia', u'Lista de festas de Interese Turístico de Galicia', u'Galicia'],
-            [u'Anexo:Fiestas de interés turístico de La Rioja', None, u'La Rioja'],
-            [u'Anexo:Fiestas de interés turístico de Navarra', None, u'Navarre'],
-            [u'Anexo:Fiestas de interés turístico de la Región de Murcia', None, u'Region of Murcia'],
-            [u'Anexo:Fiestas y tradiciones del País Vasco', None, u'Basque Country']
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de AndalucÃ­a', None, u'Andalusia'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de AragÃ³n', None, u'Aragon'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Asturias', None, u'Asturias'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Cantabria', None, u'Cantabria'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Castilla-La Mancha', None, u'Castile-La Mancha'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Castilla y LeÃ³n', None, u'Castile and LeÃ³n'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de CataluÃ±a', None, u'Catalonia'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de la Comunidad de Madrid', None, u'Community of Madrid'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de la Comunidad Valenciana', None, u'Valencian Community'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Extremadura', None, u'Extremadura'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de las Islas Baleares', None, u'Balearic Islands'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de las Islas Canarias', None, u'Canary Islands'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Galicia', u'Lista de festas de Interese TurÃ­stico de Galicia', u'Galicia'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de La Rioja', None, u'La Rioja'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Navarra', None, u'Navarre'],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de la RegiÃ³n de Murcia', None, u'Region of Murcia'],
+            [u'Anexo:Fiestas y tradiciones del PaÃ­s Vasco', None, u'Basque Country']
         ]
 
 def unix_time(zulu_time_string):
@@ -163,9 +172,9 @@ def main():
                         df_row["wikidata_timestamp"] = str(unix_time(str(creation.timestamp)))
                     if template.get(u"imagen").value and len(template.get(u"imagen").value) > 2:
                         df_row["image"] = template.get(u"imagen").value.strip()
-                    if template.get(u"categoría-Commons").value and len(template.get(u"categoría-Commons").value) > 3:
-                        df_row["category"] = template.get(u"categoría-Commons").value.strip()
-                        cat_page = pb.Page(commons_site, title=template.get(u"categoría-Commons").value, ns=14)
+                    if template.get(u"categorÃ­a-Commons").value and len(template.get(u"categorÃ­a-Commons").value) > 3:
+                        df_row["category"] = template.get(u"categorÃ­a-Commons").value.strip()
+                        cat_page = pb.Page(commons_site, title=template.get(u"categorÃ­a-Commons").value, ns=14)
                         creation = cat_page.oldest_revision
                         df_row["cat_timestamp"] = str(unix_time(str(creation.timestamp)))
 
@@ -388,8 +397,8 @@ def main():
                     df_row["image"] = template.get(u"imagen").value
                     if template.get(u"imagen").value.strip() in list(images_df["image_title"]):
                         df_row["WLF_image"] = True
-                if template.get(u"categoría-Commons").value and len(template.get(u"categoría-Commons").value) > 3:
-                    df_row["category"] = template.get(u"categoría-Commons").value
+                if template.get(u"categorÃ­a-Commons").value and len(template.get(u"categorÃ­a-Commons").value) > 3:
+                    df_row["category"] = template.get(u"categorÃ­a-Commons").value
 
                 festival_contribs_df = festival_contribs_df.append(df_row, ignore_index=True)
     pb.output('Retrieving --> WLF 2016-1 festival list')
