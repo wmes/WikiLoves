@@ -1,4 +1,4 @@
- #!/usr/bin/python
+#!/usr/bin/python
 # -*- coding: latin-1 -*-
 
 # generic_wikidata_updater.py   Takes WLF lists from the Spanish Wikipedia and creates all necessary stuff in Wikidata
@@ -44,46 +44,46 @@ NAVARRE_TOURIST_FESTIVAL_VALUE      = 'Q23727539'
 MURCIA_TOURIST_FESTIVAL_VALUE       = 'Q23660852'
 
 festival_sources = [
-            [u'Anexo:Fiestas de Interés Turístico Internacional (España)', INT_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de Interés Turístico Nacional (España)', NAT_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de Andalucía', ANDALUSIA_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de Aragón', ARAGON_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de Asturias', ASTURIAS_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de Cantabria', CANTABRIA_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de Castilla-La Mancha', CM_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de Castilla y León', FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de Cataluña', FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de la Comunidad de Madrid', MADRID_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de la Comunidad Valenciana', FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de Extremadura', EXTR_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de las Islas Baleares', FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de las Islas Canarias', FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de Galicia', GALICIA_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de La Rioja', RIOJA_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de Navarra', NAVARRE_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas de interés turístico de la Región de Murcia', MURCIA_TOURIST_FESTIVAL_VALUE],
-            [u'Anexo:Fiestas y tradiciones del País Vasco', FESTIVAL_VALUE]
+            [u'Anexo:Fiestas de InterÃ©s TurÃ­stico Internacional (EspaÃ±a)', INT_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de InterÃ©s TurÃ­stico Nacional (EspaÃ±a)', NAT_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de AndalucÃ­a', ANDALUSIA_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de AragÃ³n', ARAGON_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Asturias', ASTURIAS_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Cantabria', CANTABRIA_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Castilla-La Mancha', CM_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Castilla y LeÃ³n', FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de CataluÃ±a', FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de la Comunidad de Madrid', MADRID_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de la Comunidad Valenciana', FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Extremadura', EXTR_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de las Islas Baleares', FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de las Islas Canarias', FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Galicia', GALICIA_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de La Rioja', RIOJA_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de Navarra', NAVARRE_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas de interÃ©s turÃ­stico de la RegiÃ³n de Murcia', MURCIA_TOURIST_FESTIVAL_VALUE],
+            [u'Anexo:Fiestas y tradiciones del PaÃ­s Vasco', FESTIVAL_VALUE]
             ]
 
-annexes = [u'Anexo:Fiestas de Interés Turístico Internacional (España)',
-            u'Anexo:Fiestas de Interés Turístico Nacional (España)',
-            u'Anexo:Fiestas de interés turístico de Andalucía',
-            u'Anexo:Fiestas de interés turístico de Aragón',
-            u'Anexo:Fiestas de interés turístico de Asturias',
-            u'Anexo:Fiestas de interés turístico de Cantabria',
-            u'Anexo:Fiestas de interés turístico de Castilla-La Mancha',
-            u'Anexo:Fiestas de interés turístico de Castilla y León',
-            u'Anexo:Fiestas de interés turístico de Cataluña',
-            u'Anexo:Fiestas de interés turístico de la Comunidad de Madrid',
-            u'Anexo:Fiestas de interés turístico de la Comunidad Valenciana',
-            u'Anexo:Fiestas de interés turístico de Extremadura',
-            u'Anexo:Fiestas de interés turístico de las Islas Baleares',
-            u'Anexo:Fiestas de interés turístico de las Islas Canarias',
-            u'Anexo:Fiestas de interés turístico de Galicia',
-            u'Anexo:Fiestas de interés turístico de La Rioja',
-            u'Anexo:Fiestas de interés turístico de Navarra',
-            u'Anexo:Fiestas de interés turístico de la Región de Murcia',
-            u'Anexo:Fiestas y tradiciones del País Vasco'
+annexes = [u'Anexo:Fiestas de InterÃ©s TurÃ­stico Internacional (EspaÃ±a)',
+            u'Anexo:Fiestas de InterÃ©s TurÃ­stico Nacional (EspaÃ±a)',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de AndalucÃ­a',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de AragÃ³n',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de Asturias',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de Cantabria',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de Castilla-La Mancha',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de Castilla y LeÃ³n',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de CataluÃ±a',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de la Comunidad de Madrid',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de la Comunidad Valenciana',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de Extremadura',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de las Islas Baleares',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de las Islas Canarias',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de Galicia',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de La Rioja',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de Navarra',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de la RegiÃ³n de Murcia',
+            u'Anexo:Fiestas y tradiciones del PaÃ­s Vasco'
             ]
 
 festival_categories = [INT_TOURIST_FESTIVAL_VALUE,
@@ -107,9 +107,9 @@ festival_categories = [INT_TOURIST_FESTIVAL_VALUE,
                        FESTIVAL_VALUE
                        ]
 '''annexes = [
-            u'Anexo:Fiestas de Interés Turístico Internacional (España)',
-            u'Anexo:Fiestas de Interés Turístico Nacional (España)',
-            u'Anexo:Fiestas de interés turístico de Cataluña'
+            u'Anexo:Fiestas de InterÃ©s TurÃ­stico Internacional (EspaÃ±a)',
+            u'Anexo:Fiestas de InterÃ©s TurÃ­stico Nacional (EspaÃ±a)',
+            u'Anexo:Fiestas de interÃ©s turÃ­stico de CataluÃ±a'
             ]'''
 
 festival_categories = [
@@ -215,27 +215,27 @@ def main(argv) :
                     festival["nombre_enlace"] = festival["nombre"]
 
                 try :
-                    festival["fecha_c"] = template.get(u"fecha_celebración").value.strip()
+                    festival["fecha_c"] = template.get(u"fecha_celebraciÃ³n").value.strip()
                 except :
                     errors.append(
                         {"id": festival["wikidata"],
                          "name": festival["nombre"],
-                         "error": u"fecha_celebración not found"}
+                         "error": u"fecha_celebraciÃ³n not found"}
                     )
                     festival["fecha_c"] = u''
                 # declaration date extraction
                 try :
-                    festival["fecha_d"] = template.get(u"fecha_declaración").value.strip()
+                    festival["fecha_d"] = template.get(u"fecha_declaraciÃ³n").value.strip()
                 except :
                     errors.append(
                         {"id": festival["wikidata"],
                          "name": festival["nombre"],
-                         "error": u"fecha_declaración not found"}
+                         "error": u"fecha_declaraciÃ³n not found"}
                     )
                     festival["fecha_d"] = u''
                 # default commons category extraction
                 try :
-                    festival["cat_commons_defecto"] = template.get(u"categoría-Commons-defecto").value.strip()
+                    festival["cat_commons_defecto"] = template.get(u"categorÃ­a-Commons-defecto").value.strip()
                 except :
                     festival["cat_commons_defecto"] = u''
                 # coordinates extraction
@@ -249,8 +249,8 @@ def main(argv) :
                 else :
                     festival["image"] = u''
                 # commons category extraction
-                if template.get(u"categoría-Commons").value :
-                    festival["cat_commons"] = template.get(u"categoría-Commons").value.strip().replace(' ', '_')
+                if template.get(u"categorÃ­a-Commons").value :
+                    festival["cat_commons"] = template.get(u"categorÃ­a-Commons").value.strip().replace(' ', '_')
                 else :
                     festival["cat_commons"] = u''
 
@@ -729,8 +729,8 @@ def main(argv) :
                 my_text = u"<pre>\n"
             template_text = u"{{fila WLF\n| nombre_enlace     = %s\n" \
                             u"| nombre            = %s\n| lugar             = %s\n" \
-                            u"| fecha_celebración = %s\n| fecha_declaración = %s\n" \
-                            u"| categoría-Commons-defecto = %s\n| categoría-Commons = %s\n" \
+                            u"| fecha_celebraciÃ³n = %s\n| fecha_declaraciÃ³n = %s\n" \
+                            u"| categorÃ­a-Commons-defecto = %s\n| categorÃ­a-Commons = %s\n" \
                             u"| wikidata          = %s\n| coord             = %s\n" \
                             u"| imagen            = %s\n}}\n" % (
                 festival["nombre_enlace"], festival["nombre"], festival["lugar"], festival["fecha_c"],
@@ -741,7 +741,7 @@ def main(argv) :
 
         # Creation of CSV-like log
         wlf_text = u'<pre>\n'
-        wlf_text = wlf_text + u'nombre_es;nombre enlace_es;identificador wikidata;categoría commons;imagen;lugar;origen;estatus;\n'
+        wlf_text = wlf_text + u'nombre_es;nombre enlace_es;identificador wikidata;categorÃ­a commons;imagen;lugar;origen;estatus;\n'
         for festival in festivals :
             if festival["repeated"] == True :
                 template_text = u"%s;%s;%s;%s;%s;%s;%s;duplicado;\n" % (
