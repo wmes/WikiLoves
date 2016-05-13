@@ -275,7 +275,7 @@ def main():
 
         list_text += u'</pre>'
         image_list_page.text = list_text
-        #image_list_page.save(u"WLE Spain 2016 image log")
+        image_list_page.save(u"WLE Spain 2016 image log")
         pb.output('Publishing --> WLE 2016 image log')
     else :
         # Taking from a previously uploaded list of images
@@ -424,13 +424,14 @@ def main():
                         u'| style="text-align:center; font-family:arial black; font-size:200%; color:grey" ' \
                         u'| {{LangSwitch| es=España|ca=Espanya|en=Spain}}&nbsp;&nbsp;&nbsp;\n' \
                         u'|}\n'
-    statisticts_text += u"Welcome to the '''WLE Spain 2016''' statistics. Below you will find information about the " \
-                        u"number of uploaded images, the contributors and the WLE sites the pictures belong to. " \
+    statisticts_text += u"Welcome to the statistics of the '''Wiki Loves Earth 2016 in Spain''' contest. Below you " \
+                        u"will find information about the number of uploaded images, the contributors and the " \
+                        u"[[:en:Site of Community Importance|sites]] of community importance the pictures belong to. " \
                         u"Enjoy!!!\n\n"
     statisticts_text += u"==Images==\n"
     statisticts_text += u"* '''Main category''': " \
                         u"[[:Category:Images from Wiki Loves Earth 2016 in Spain|Images from Wiki Loves Earth 2016 in Spain]]\n"
-    statisticts_text += u"* '''Total''': %d pictures\n" % (images_df.count()['image_title'])
+    statisticts_text += u"* '''Total''': %d picture(s)\n" % (images_df.count()['image_title'])
     statisticts_text += u"** '''Quality Images''': %d pictures ([[%s|see]])\n" % (len(QI_list), GALLERY_FEATURED_ARTICLES)
     statisticts_text += u"* '''Statistics generation date''': {{subst:CURRENTTIME}} UTC, {{subst:CURRENTMONTHNAME}} " \
                         u"{{subst:CURRENTDAY}}, {{subst:CURRENTYEAR}}\n"
