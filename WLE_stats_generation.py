@@ -21,7 +21,7 @@ import json
 from random import sample
 import copy
 import re
-from collections import OrderedDict
+from collections import Counter, OrderedDict
 from operator import itemgetter
 
 # Information about the SCI sources
@@ -149,40 +149,34 @@ def split_range (input_range, n) :
             last_value += quotient
     return boundaries
 
-def get_global_usage (api_url, query_string_dict, title) :
-    api_call_counter = 0
-    usage_dict = dict()
-    usage_dict["image"] = dict()
-    usage_dict["article"] = dict()
-    raw_api_query_string = u''
-    query_string_items = list()
-
-    api_call_counter += 1
-    query_string_items.append(title)
-    if api_call_counter % 5 == 0:
-        raw_api_query_string = unicode(u'|'.join(query_string_items)).encode('utf-8')
-        API_QUERY_STRING["titles"] = raw_api_query_string
-        f = urlopen(API_BASE_URL, urlencode(API_QUERY_STRING))
-        response = f.read()
-        response_dict = json.loads(response)
-        for key, value in response_dict["query"]["pages"].iteritems():
-            if len(value[u'globalusage']) > 0:
-                found_dict = dict()
-                for item in value[u'globalusage']:
-                    if (item[u'ns'] == u'0') or (item[u'ns'] == u'104'):
-                        if item[u'wiki'] in usage_dict["article"]:
-                            usage_dict["article"][item[u'wiki']] += 1
-                        else:
-                            usage_dict["article"][item[u'wiki']] = 1
-                        found_dict[item[u'wiki']] = True
-                for key, value in found_dict.iteritems():
-                    if key in usage_dict["image"]:
-                        usage_dict["image"][key] += 1
+def get_global_usage (api_url, query_string_dict, title_list) :
+    usage_dict_ = dict()
+    usage_dict_["image"] = dict()
+    usage_dict_["article"] = dict()
+    raw_api_query_string = unicode(u'|'.join(title_list)).encode('utf-8')
+    #print raw_api_query_string
+    API_QUERY_STRING["titles"] = raw_api_query_string
+    f = urlopen(API_BASE_URL, urlencode(API_QUERY_STRING))
+    response = f.read()
+    response_dict = json.loads(response)
+    for key, value in response_dict["query"]["pages"].iteritems():
+        if len(value[u'globalusage']) > 0:
+            #print value
+            found_dict = dict()
+            for item in value[u'globalusage']:
+                if (item[u'ns'] == u'0') or (item[u'ns'] == u'104'):
+                    if item[u'wiki'] in usage_dict_["article"]:
+                        usage_dict_["article"][item[u'wiki']] += 1
                     else:
-                        usage_dict["image"][key] = 1
-        query_string_items = list()
-
-    return usage_dict
+                        usage_dict_["article"][item[u'wiki']] = 1
+                    found_dict[item[u'wiki']] = True
+            for key, value in found_dict.iteritems():
+                if key in usage_dict_["image"]:
+                    usage_dict_["image"][key] += 1
+                else:
+                    usage_dict_["image"][key] = 1
+    #print usage_dict_
+    return usage_dict_
 
 def main():
     parser = OptionParser()
@@ -218,6 +212,10 @@ def main():
     sci_list = list(scis_df["code"])
 
     QI_list = list()
+    title_globalusage_list = list()
+
+    perimage_usage_dict = dict()
+    perarticle_usage_dict = dict()
 
     if options.cached == False :
        # Retrieving images from the actual WLE category
@@ -264,15 +262,20 @@ def main():
                 image_repository.append(image_item)
                 row_text = u'%s;\n' % (';'.join(image_item))
                 list_text += row_text
-
-                usage_dict = get_global_usage(API_BASE_URL, API_QUERY_STRING, 'File:' + page.title(withNamespace=False))
+                #print image_counter
+                title_globalusage_list.append('File:' + page.title(withNamespace=False))
+                if image_counter % 5 == 0 :
+                    usage_dict = get_global_usage(API_BASE_URL, API_QUERY_STRING, title_globalusage_list)
+                    perimage_usage_dict = dict(Counter(usage_dict["image"])+Counter(perimage_usage_dict))
+                    perarticle_usage_dict = dict(Counter(usage_dict["article"])+Counter(perarticle_usage_dict))
+                    title_globalusage_list = list()
 
         pb.output ('Retrieving --> '+str(image_counter)+" images downloaded")
         pb.output('Retrieved --> WLE 2016 image list')
 
         list_text += u'</pre>'
         image_list_page.text = list_text
-        image_list_page.save(u"WLE Spain 2016 image log")
+        #image_list_page.save(u"WLE Spain 2016 image log")
         pb.output('Publishing --> WLE 2016 image log')
     else :
         # Taking from a previously uploaded list of images
@@ -301,7 +304,12 @@ def main():
                         QI_list.append(page.title(withNamespace=False))
                         break
 
-                usage_dict = get_global_usage(API_BASE_URL, API_QUERY_STRING, 'File:' + tokens[0])
+                title_globalusage_list.append('File:' + page.title(withNamespace=False))
+                if image_counter % 5 == 0 :
+                    usage_dict = get_global_usage(API_BASE_URL, API_QUERY_STRING, title_globalusage_list)
+                    perimage_usage_dict = dict(Counter(usage_dict["image"])+Counter(perimage_usage_dict))
+                    perarticle_usage_dict = dict(Counter(usage_dict["article"])+Counter(perarticle_usage_dict))
+                    title_globalusage_list = list()
 
         pb.output('Retrieved --> WLE 2016 image list from cache')
 
@@ -645,23 +653,23 @@ def main():
                        u'|- valign="middle"\n' \
                        u'! Item\n' \
                        u'! Counter\n'
-    for key, value in usage_dict["image"].iteritems():
+    for key, value in perimage_usage_dict.iteritems():
         image_usage_text += u'|-\n' \
                             u'| width="80%%" | WLE 2016 images used in %s\n' \
                             u'| align="center" | %d\n' % (key, value)
     image_usage_text += u'|-\n' \
                         u'| width="80%%" | Distinct WLE 2016 images used in any Wikipedia\n' \
                         u'| align="center" | \'\'\'%d\'\'\' (%.2f%%)\n' % (
-                                                            sum(usage_dict["image"].values()),
-                                                            float(sum(usage_dict["image"].values()))*100/float(images_df.count()['image_title'])
+                                                            sum(perimage_usage_dict.values()),
+                                                            float(sum(perimage_usage_dict.values()))*100/float(images_df.count()['image_title'])
                                                             )
-    for key, value in usage_dict["article"].iteritems():
+    for key, value in perarticle_usage_dict.iteritems():
         image_usage_text += u'|-\n' \
                             u'| width="80%%" | Articles with WLE 2016 images in %s\n' \
                             u'| align="center" | %d\n' % (key, value)
     image_usage_text += u'|-\n' \
                         u'| width="80%%" | Articles with WLE 2016 images in any Wikipedia\n' \
-                        u'| align="center" | \'\'\'%d\'\'\'\n' % (sum(usage_dict["article"].values()))
+                        u'| align="center" | \'\'\'%d\'\'\'\n' % (sum(perarticle_usage_dict.values()))
     image_usage_text += u'|}\n\n'
     pb.output('Generating --> WLE 2016 Image Usage Statistics')
     statisticts_text += image_usage_text
