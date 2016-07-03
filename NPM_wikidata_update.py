@@ -1,6 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8  -*-
-
+# NPM_wikidata_updater.py   Takes NPM lists from the Spanish Wikipedia and creates all necessary stuff in Wikidata
+# author:                   Discasto (WM-ES)
+# date:                     2016-07-03
+#
+# Distributed under the terms of the MIT license.
+########################################################################################################################
+#
 import pywikibot as pb
 import mwparserfromhell as mwh
 import pandas as pd
